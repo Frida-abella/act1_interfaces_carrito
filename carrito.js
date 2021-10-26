@@ -37,13 +37,12 @@ var botonAceptar;  // almacena el elemento del botón de Aceptar condiciones
 var botonImprimir;
 var botonRestablecer;
 
-alert(nombreArticulo.value);  //comprobar qu puede obtener el valor de value
 
 function initVariables() {
     nombreArticulo = document.getElementById("nombreArticulo");
     precioArticulo = document.getElementById("precioArticulo");
     unidadesArticulo = document.getElementById("unidades");
-    botonAñadir = document.getElementById("add");
+    botonAñadir = document.getElementById("botonAñadir");
 
     faltaNombre = document.getElementById("faltaNombre");
     faltaPrecio = document.getElementById("faltaPrecio");
@@ -71,7 +70,7 @@ function initVariables() {
 
     botonAceptar = document.getElementById("botonAceptar");
 
-    botonImprimir = document.getElementById("botonPrint");
+    botonImprimir = document.getElementById("botonImprimir");
     botonRestablecer = document.getElementById("botonRestablecer");
     botonImprimir.disabled = true;
     
@@ -86,6 +85,8 @@ function initListener() {
     botonAñadir.addEventListener("click", comprobarValores); // cuando se hace click en el botón Añadir al carrito ("click"), llama a la función comprobarValores()
     formaPago.addEventListener("change", cargarPago);  // cuando el value del Método de pago cambia ("change"), llama a la función cargarPago()
     botonAceptar.addEventListener("change", habilitarImprimir);  //  cuando cambia el estado del botón "Aceptar condiciones" llama a la función habilitarImprimir()
+    botonImprimir.addEventListener("click", alertImprimir);
+    botonRestablecer.addEventListener("click", resetTotal);
 }
 
 window.onload = function () {
@@ -93,14 +94,11 @@ window.onload = function () {
     initListener();
 }
 
-// La siguiente función habilita el botón de "Imprimir" cuando se hace click en el botón de "Aceptar condiciones"
 
-function habilitarImprimir () {
-    if (botonAceptar.checked == true) {
-       botonImprimir.disabled = false; 
-    } else {
-        botonImprimir.disabled = true;
-    }
+function añadirCarrito () {
+    sumarImportes();
+    escribirNombresArticulos();
+    resetValoresCarrito();
 }
 
 function comprobarValores () {
@@ -120,22 +118,24 @@ function comprobarValores () {
         errorDato.textContent = "Tipo de dato incorrecto: introduzca solo números";
     } 
     else {
-        calcularImporte();
+        añadirCarrito();
     } 
 }
 
 // Funciones relacionadas con el botón "Añadir al carrito":
-// calcularImporte() calcula el importe por artículo, multiplicando precio por numero de unidades
+
+/* calcularImporte() calcula el importe por artículo, multiplicando precio por numero de unidades
 function calcularImporte () {  
     importeTotalArticulo = precioArticulo.value * unidadesArticulo.value;
     sumarImportes();
 }
+*/ 
 
+// calcula el importe por artículo, multiplicando precio por numero de unidades
 //suma los importes y lo saca en la caja de texto del "Precio total del carrito"
-// aunar esta y la de arriba?
 function sumarImportes () {  
+    importeTotalArticulo = precioArticulo.value * unidadesArticulo.value;
     precioTotalCarrito.value += importeTotalArticulo;
-    escribirNombresArticulos();
 }
 
 
@@ -145,9 +145,9 @@ function escribirNombresArticulos () {  // Añade el nombre del artículo a la l
 }
 
 
-//La función resetValores() vuelve a poner en blanco las cajas de texto de nombre y precio del artículo y pone focus sobre la primera
+//La función resetValoresCarrito() vuelve a poner en blanco las cajas de texto de nombre y precio del artículo y pone focus sobre la primera
 
-function resetValores () {  
+function resetValoresCarrito () {  
     nombreArticulo.value = "";  // Elimina el contenido de las tres cajas de texto de arriba (nombre, precio)
     precioArticulo.value = "";
     unidadesArticulo.value = 1;  // numero de unidades a 1 por defecto
@@ -169,4 +169,34 @@ function cargarPago () {
         capaEfectivo.style.display="block";
         importeEfectivo.value = precioTotalCarrito.value;  // Saca el valor del "Precio total del carrito"
     }
+}
+
+// La función habilitarImprimir activa el botón de "Imprimir" cuando se hace click en el botón de "Aceptar condiciones"
+
+function habilitarImprimir () {
+    if (botonAceptar.checked == true) {
+       botonImprimir.disabled = false; 
+    } else {
+        botonImprimir.disabled = true;
+    }
+}
+
+// La función alertImprimir() saca un mensaje de alerta con el total del precio y artículos del carrito
+
+function alertImprimir () {
+    if (formaPago.value == "seleccione") {
+        alert("Seleccione una forma de pago");
+    }
+    else {
+        alert("Los artículos de mi carrito son: " + articulosCarrito + " y el precio total es: " + precioTotalCarrito);
+    }
+}
+
+function resetTotal() {
+    nombreArticulo.value = "";  // Elimina el contenido de las tres cajas de texto de arriba (nombre, precio)
+    precioArticulo.value = "";
+    unidadesArticulo.value = 1;  // numero de unidades a 1 por defecto
+    nombreArticulo.focus(); 
+    articulosCarrito.value = "";
+    precioTotalCarrito.value = 0;
 }
