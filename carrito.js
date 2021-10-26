@@ -51,8 +51,9 @@ function initVariables() {
     articulosCarrito = document.getElementById("articulosCarrito");
     precioTotalCarrito = document.getElementById("precioTotal");
     
-    formaPago = document.formulario.opcionPago;
-    
+    formaPago = document.getElementById("opcionPago");
+    //formaPago = document.formulario.opcion_pago;
+
     /* Las siguientes sólo en caso de querer sacar mensajes de error si hay errores en estos campos.
     NO están inicializadas ni usadas todavía:
     
@@ -94,13 +95,6 @@ window.onload = function () {
     initListener();
 }
 
-
-function añadirCarrito () {
-    sumarImportes();
-    escribirNombresArticulos();
-    resetValoresCarrito();
-}
-
 function comprobarValores () {
     if (nombreArticulo.value == "" && precioArticulo.value == "") {
         faltaNombre.textContent = "Falta artículo";
@@ -122,17 +116,16 @@ function comprobarValores () {
     } 
 }
 
+function añadirCarrito () {
+    sumarImportes();
+    escribirNombresArticulos();
+    resetValoresCarrito();
+}
+
 // Funciones relacionadas con el botón "Añadir al carrito":
 
-/* calcularImporte() calcula el importe por artículo, multiplicando precio por numero de unidades
-function calcularImporte () {  
-    importeTotalArticulo = precioArticulo.value * unidadesArticulo.value;
-    sumarImportes();
-}
-*/ 
-
-// calcula el importe por artículo, multiplicando precio por numero de unidades
-//suma los importes y lo saca en la caja de texto del "Precio total del carrito"
+/* sumarImportes() calcula el importe por artículo, multiplicando precio por numero de unidades
+suma los importes y lo saca en la caja de texto del "Precio total del carrito" */
 function sumarImportes () {  
     importeTotalArticulo = precioArticulo.value * unidadesArticulo.value;
     precioTotalCarrito.value += importeTotalArticulo;
@@ -158,10 +151,10 @@ function resetValoresCarrito () {
 // La función cargarPago() se encarga de desplegar las opciones de pago según lo que se seleccione (tarjeta o efectivo)
 
 function cargarPago () {
-    if (formaPago.value == "seleccione"){
+    if (formaPago.value == "seleccione") {
         capaTarjeta.style.display="none";
         capaEfectivo.style.display="none";
-    } else if (formaPago.value == "tarjeta"){
+    } else if (formaPago.value == "tarjeta") {
         capaTarjeta.style.display="block";
         capaEfectivo.style.display="none";
     } else {
