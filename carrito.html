@@ -14,7 +14,7 @@
             width: 600px;
             /* Esquema del formulario */
             padding: 1em;
-            border: 1px solid #CCC;
+            border: 2px solid #CCC;
             border-radius: 1em;
             background-color: #ADD8E6;
 
@@ -63,7 +63,7 @@
             vertical-align: top;
 
             /* Proporcionar espacio para escribir texto */
-            height: 5em;
+            height: 4em;
           }
 
           .button {
@@ -78,25 +78,30 @@
           }
 
           #unidades{
-             display: inline-block;
+            /* display: inline-block; */
             width: 60px;
             text-align: right;
           }
 
-          #aceptar{
-
+          #botonAceptar{
             width: 20px;
           }
 
-          #restablecer{
+          #botonAñadir{
             display: inline-block;
+            width: 130px;
+            margin-left: .5em;
+          }
+
+          #botonImprimir {
+            display: inline-block;
+            width: 120px;
+            margin-left: .5em;
           }
 
           #botonRestablecer{
             display: inline-block;
-          }
-
-          #botonImprimir{
+            width: 120px;
             margin-left: .5em;
           }
 
@@ -109,7 +114,7 @@
 
     <!-- action="/my-handling-form-page" method="post" -->
 
-        <form name="formulario">
+    <form name="formulario">
      <ul>
       <li>
         <label for="nombre_articulo">Nombre articulo:</label>
@@ -117,16 +122,14 @@
       </li>
       <li>
         <label for="precio_articulo">Precio artículo:</label>
-        <input type="text" id="precioArticulo" name="precio_articulo"> <span id="faltaPrecio"></span> <span id="datoIncorrecto"></span>
+        <input type="text" id="precioArticulo" name="precio_articulo" placeholder="Decimales separados por punto"> <span id="faltaPrecio"></span> <span id="datoIncorrecto"></span>
       </li>
       <li>
         <label for="cant_unidades">Unidades:</label>
         <input type="number" id="unidades" name="cant_unidades" min="1" value = "1"></input>
       </li>
-     </ul>
 
-     <br>
-     </br>
+
 
      <li class="button">
         <input type="button" id="botonAñadir" name="botonAñadir" value="Añadir al carrito"> 
